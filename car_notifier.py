@@ -99,8 +99,7 @@ if __name__ == '__main__':
     while True:
         try:
             main(80, 60)
-        except KeyboardInterrupt:
-            raise
+            break  # KeyboardInterrupt
         except:
             email_error()
-            time.sleep(300) # Wait 5 min before trying again to avoid too many emails
+            time.sleep(300)  # Wait 5 min before trying again to avoid too many emails
