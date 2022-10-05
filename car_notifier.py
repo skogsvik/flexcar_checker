@@ -70,8 +70,8 @@ def main(price=80, sleep=60):
     flex_car = FlexCar('Atlanta')
 
     with until(KeyboardInterrupt):
+        prev_notified_cars = load_cache()
         while True:
-            prev_notified_cars = load_cache()
             available_cars = dict(map(simplify_car,
                                       flex_car.iter_available_inventory(priceWeekly=price)))
 
@@ -87,8 +87,11 @@ def main(price=80, sleep=60):
                            f'New cars are available:\n{new_cars_str}\n\n'
                            f'Previously notified cars:\n{previous_cars_str}')
 
+            if prev_notified_cars != available_cars:
                 with open(CACHE, 'bw') as f:
                     pickle.dump(available_cars, f)
+                prev_notified_cars = available_cars
+
             time.sleep(sleep)
 
 
